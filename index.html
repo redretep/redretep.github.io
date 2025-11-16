@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>pd.ct.ws</title>
+  <title>pidis projects</title>
   <style>
     :root{
-      --bg1:#07120b; /* very dark green/black */
-      --bg2:#0b2b17; /* deep forest */
-      --accent:#08c46b; /* bright moss green */
+      --bg1:#07120b;
+      --bg2:#0b2b17;
+      --accent:#08c46b;
       --muted:rgba(8,196,107,0.12);
       --glass: rgba(255,255,255,0.03);
       --radius:18px;
@@ -25,8 +25,6 @@
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
       overflow:hidden;
     }
-
-    /* subtle animated vignette */
     .vignette{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:0.6}
     .vig-inner{width:120%;height:120%;background:radial-gradient(circle at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.6) 100%);transform:rotate(3deg);}
 
@@ -45,13 +43,11 @@
     }
     h1{font-size:clamp(20px,3.4vw,40px);margin:0 0 6px 0;letter-spacing:-0.02em}
     p{margin:0;color:rgba(216,255,231,0.8)}
-
-    /* silhouette panel (Olly-Moss-inspired minimal silhouette) */
+    
     .sil{
       width:100%;height:120px;margin-top:18px;filter:drop-shadow(0 12px 28px rgba(0,0,0,0.7));
     }
 
-    /* right column with buttons */
     .menu{
       display:flex;flex-direction:column;gap:14px;align-items:stretch;
     }
@@ -101,23 +97,23 @@
           <rect x="0" y="0" width="24" height="24" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.12"></rect>
           <path d="M4 16c2-5 8-9 12-10v10H4z" fill="currentColor" fill-opacity="0.12"></path>
         </svg>
-        von peter
+        hi there :)
       </div>
 
-      <h1>pd.ct.ws: alle meine projekte</h1>
-      <p>klicke auf einen button um das projekt zu sehen</p>
+      <h1>all of my projects</h1>
+      <p>click on a button to look at the project</p>
 
 
     </section>
 
     <aside class="menu" aria-label="quick links">
-      <a class="btn" href="/pidify" title="Home">🎧 pidify</a>
-      <a class="btn" href="/games" title="Games">🎮 games</a>
-      <a class="btn" href="/proxys" title="Proxys">🛡️ proxys</a>
-      <a class="btn small" href="/pd4k" title="PD4K">🍿 pd4k</a>
-          <a class="btn" href="/gamble4free">🍀 Gamble</a>
-      <a class="btn" href="https://pd.ct.ws/chat">💬 Chat</a>
-      <a class="btn" href="/placeholder3">Placeholder 3</a>
+      <a class="btn" href="https://redretep.github.io/pidify" title="Home">🎧 pidify</a>
+      <a class="btn" href="https://pd.ct.ws/games" title="Games">🎮 pdctwsgames</a>
+      <a class="btn" href="https://pd.ct.ws/proxys" title="Proxys">🛡️ proxys</a>
+      <a class="btn small" href="https://pd.ct.ws/pd4k" title="PD4K">🍿 pd4k (free movies!)</a>
+      <a class="btn" href="https://pd.ct.ws/gamble4free">🍀 Gamble</a>
+      <a class="btn" href="https://pd.ct.ws/chat">💬 RLGChat</a>
+      <a class="btn" href="/comingsoon">👀 COMING SOON</a>
     </aside>
   </main>
 
