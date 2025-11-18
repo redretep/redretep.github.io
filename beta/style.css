@@ -1,0 +1,234 @@
+/* 1. SETUP & THEME DEFINITION */
+/* ---------------------------------- */
+:root {
+    /* M3 Light Theme Color Tokens */
+    --md-sys-color-primary-light: #6750A4;
+    --md-sys-color-on-primary-light: #FFFFFF;
+    --md-sys-color-primary-container-light: #EADDFF;
+    --md-sys-color-on-primary-container-light: #21005D;
+    --md-sys-color-secondary-light: #625B71;
+    --md-sys-color-on-secondary-light: #FFFFFF;
+    --md-sys-color-secondary-container-light: #E8DEF8;
+    --md-sys-color-on-secondary-container-light: #1D192B;
+    --md-sys-color-tertiary-light: #7D5260;
+    --md-sys-color-on-tertiary-light: #FFFFFF;
+    --md-sys-color-tertiary-container-light: #FFD8E4;
+    --md-sys-color-on-tertiary-container-light: #31111D;
+    --md-sys-color-error-light: #B3261E;
+    --md-sys-color-on-error-light: #FFFFFF;
+    --md-sys-color-error-container-light: #F9DEDC;
+    --md-sys-color-on-error-container-light: #410E0B;
+    --md-sys-color-background-light: #FFFBFE;
+    --md-sys-color-on-background-light: #1C1B1F;
+    --md-sys-color-surface-light: #FFFBFE;
+    --md-sys-color-on-surface-light: #1C1B1F;
+    --md-sys-color-surface-variant-light: #E7E0EC;
+    --md-sys-color-on-surface-variant-light: #49454F;
+    --md-sys-color-outline-light: #79747E;
+    --md-sys-color-shadow-light: #000000;
+    --md-sys-color-surface-container-highest-light: #E6E0E9;
+
+    /* M3 Dark Theme Color Tokens */
+    --md-sys-color-primary-dark: #D0BCFF;
+    --md-sys-color-on-primary-dark: #381E72;
+    --md-sys-color-primary-container-dark: #4F378B;
+    --md-sys-color-on-primary-container-dark: #EADDFF;
+    --md-sys-color-secondary-dark: #CCC2DC;
+    --md-sys-color-on-secondary-dark: #332D41;
+    --md-sys-color-secondary-container-dark: #4A4458;
+    --md-sys-color-on-secondary-container-dark: #E8DEF8;
+    --md-sys-color-tertiary-dark: #EFB8C8;
+    --md-sys-color-on-tertiary-dark: #492532;
+    --md-sys-color-tertiary-container-dark: #633B48;
+    --md-sys-color-on-tertiary-container-dark: #FFD8E4;
+    --md-sys-color-error-dark: #F2B8B5;
+    --md-sys-color-on-error-dark: #601410;
+    --md-sys-color-error-container-dark: #8C1D18;
+    --md-sys-color-on-error-container-dark: #F9DEDC;
+    --md-sys-color-background-dark: #1C1B1F;
+    --md-sys-color-on-background-dark: #E6E1E5;
+    --md-sys-color-surface-dark: #1C1B1F;
+    --md-sys-color-on-surface-dark: #E6E1E5;
+    --md-sys-color-surface-variant-dark: #49454F;
+    --md-sys-color-on-surface-variant-dark: #CAC4D0;
+    --md-sys-color-outline-dark: #938F99;
+    --md-sys-color-shadow-dark: #000000;
+    --md-sys-color-surface-container-highest-dark: #36343B;
+
+    /* M3 Shape Tokens */
+    --md-sys-shape-corner-none: 0px;
+    --md-sys-shape-corner-small: 4px;
+    --md-sys-shape-corner-medium: 12px;
+    --md-sys-shape-corner-large: 16px;
+    --md-sys-shape-corner-full: 999px;
+
+    /* M3 Typography Tokens */
+    --md-sys-typescale-font-family: 'Roboto', sans-serif;
+    --md-sys-typescale-brand-font-family: 'Poppins', sans-serif;
+    --md-sys-typescale-display-large-size: 57px;
+    --md-sys-typescale-headline-small-size: 24px;
+    --md-sys-typescale-headline-medium-size: 28px;
+    --md-sys-typescale-title-large-size: 22px;
+    --md-sys-typescale-body-medium-size: 14px;
+    --md-sys-typescale-label-large-size: 14px;
+
+    /* Default to Light Theme */
+    --primary: var(--md-sys-color-primary-light);
+    --on-primary: var(--md-sys-color-on-primary-light);
+    --primary-container: var(--md-sys-color-primary-container-light);
+    --on-primary-container: var(--md-sys-color-on-primary-container-light);
+    --secondary: var(--md-sys-color-secondary-light);
+    --on-secondary: var(--md-sys-color-on-secondary-light);
+    --secondary-container: var(--md-sys-color-secondary-container-light);
+    --on-secondary-container: var(--md-sys-color-on-secondary-container-light);
+    --background: var(--md-sys-color-background-light);
+    --on-background: var(--md-sys-color-on-background-light);
+    --surface: var(--md-sys-color-surface-light);
+    --on-surface: var(--md-sys-color-on-surface-light);
+    --surface-variant: var(--md-sys-color-surface-variant-light);
+    --on-surface-variant: var(--md-sys-color-on-surface-variant-light);
+    --outline: var(--md-sys-color-outline-light);
+    --surface-container-highest: var(--md-sys-color-surface-container-highest-light);
+    --shadow: var(--md-sys-color-shadow-light);
+}
+
+body.dark-theme {
+    /* Switch to Dark Theme */
+    --primary: var(--md-sys-color-primary-dark);
+    --on-primary: var(--md-sys-color-on-primary-dark);
+    --primary-container: var(--md-sys-color-primary-container-dark);
+    --on-primary-container: var(--md-sys-color-on-primary-container-dark);
+    --secondary: var(--md-sys-color-secondary-dark);
+    --on-secondary: var(--md-sys-color-on-secondary-dark);
+    --secondary-container: var(--md-sys-color-secondary-container-dark);
+    --on-secondary-container: var(--md-sys-color-on-secondary-container-dark);
+    --background: var(--md-sys-color-background-dark);
+    --on-background: var(--md-sys-color-on-background-dark);
+    --surface: var(--md-sys-color-surface-dark);
+    --on-surface: var(--md-sys-color-on-surface-dark);
+    --surface-variant: var(--md-sys-color-surface-variant-dark);
+    --on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
+    --outline: var(--md-sys-color-outline-dark);
+    --surface-container-highest: var(--md-sys-color-surface-container-highest-dark);
+    --shadow: var(--md-sys-color-shadow-dark);
+}
+
+/* 2. GLOBAL STYLES & RESETS */
+/* ---------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--md-sys-typescale-font-family);
+    background-color: var(--background);
+    color: var(--on-background);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* 3. TYPOGRAPHY STYLES */
+/* ---------------------------------- */
+.display-large {
+    font-family: var(--md-sys-typescale-brand-font-family);
+    font-size: var(--md-sys-typescale-display-large-size);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary);
+}
+.headline-small {
+    font-family: var(--md-sys-typescale-brand-font-family);
+    font-size: var(--md-sys-typescale-headline-small-size);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--on-surface-variant);
+}
+.headline-medium {
+    font-family: var(--md-sys-typescale-brand-font-family);
+    font-size: var(--md-sys-typescale-headline-medium-size);
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+.title-large {
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: 500;
+}
+.body-medium {
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--on-surface-variant);
+    line-height: 1.5;
+}
+.label-large {
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+
+/* 4. COMPONENT STYLES */
+/* ---------------------------------- */
+
+/* Header */
+.top-app-bar {
+    padding: 16px 0;
+    background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--surface-variant);
+}
+.top-app-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-family: var(--md-sys-typescale-brand-font-family);
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--on-surface);
+}
+.top-app-bar nav ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+}
+.top-app-bar nav a {
+    text-decoration: none;
+    color: var(--on-surface-variant);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+.top-app-bar nav a:hover {
+    color: var(--primary);
+}
+
+/* Icon Button (for theme toggle) */
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--on-surface-variant);
+    padding: 8px;
+    border-radius: var(--md-sys-shape-corner-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.icon-button:hover
