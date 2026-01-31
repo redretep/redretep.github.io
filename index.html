@@ -7,91 +7,164 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
+      padding: 24px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0b1f17;
+      color: #ecfdf5;
+      overflow-x: hidden;
     }
-    h1 { margin-bottom: 16px; }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #34d399;
+      animation: floatIn .6s ease both;
+    }
+
     ul { list-style: none; padding: 0; }
 
     .repo {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 10px;
+      background: transparent;
+      border: 2px solid #065f46;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
       cursor: pointer;
-      transition: transform .2s ease, background .2s ease;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      animation: floatIn .5s ease both;
     }
     .repo:hover {
-      transform: scale(1.01);
-      background: #1f2630;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      border-color: #34d399;
     }
-    .repo-title { color: #58a6ff; font-weight: bold; }
-    .repo-desc { font-size: 14px; color: #8b949e; margin-top: 6px; }
+    .repo-title { color: #6ee7b7; font-weight: 600; font-size: 17px; }
+    .repo-desc { font-size: 14px; color: #a7f3d0; margin-top: 6px; }
 
     .viewer {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #0d1117;
-      padding: 20px;
+      inset: 0;
+      background: #0b1f17;
+      padding: 24px;
       overflow-y: auto;
       transform: translateX(100%);
-      transition: transform .35s ease;
+      transition: transform .45s cubic-bezier(.4,0,.2,1);
+      z-index: 10;
     }
     .viewer.open { transform: translateX(0); }
 
-    .back {
-      color: #58a6ff;
-      cursor: pointer;
-      margin-bottom: 16px;
-      display: inline-block;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
     }
 
-    .actions {
-      margin: 10px 0 20px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .back {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #34d399;
+      color: #34d399;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
     }
-    .actions a {
-      padding: 6px 12px;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #58a6ff;
-      background: #161b22;
-      font-size: 14px;
+    .back:hover {
+      transform: scale(1.1);
+      background: rgba(52,211,153,.1);
     }
-    .actions a:hover { background: #1f2630; }
+
+    .actions { display: flex; gap: 12px; }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #065f46;
+      display: grid;
+      place-items: center;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .icon-btn:hover {
+      transform: scale(1.15);
+      border-color: #34d399;
+      background: rgba(52,211,153,.1);
+    }
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: #6ee7b7;
+      fill: none;
+      stroke-width: 2;
+    }
+    .download-btn svg { stroke: #34d399; }
+
+    .path {
+      font-size: 13px;
+      color: #a7f3d0;
+      margin: 12px 0;
+      animation: fadeIn .3s ease;
+    }
 
     .file {
-      padding: 8px;
-      border-bottom: 1px solid #30363d;
+      padding: 12px 14px;
+      border-radius: 14px;
+      margin-bottom: 8px;
       cursor: pointer;
+      border: 1.5px solid #065f46;
+      background: transparent;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      animation: slideIn .25s ease both;
     }
-    .file:hover { background: #161b22; }
+    .file:hover {
+      transform: translateX(6px);
+      border-color: #34d399;
+      background: rgba(52,211,153,.08);
+    }
+    .file.enter {
+      animation: folderEnter .3s ease both;
+    }
 
     .readme {
-      background: #161b22;
-      padding: 16px;
-      border-radius: 8px;
-      margin-top: 10px;
+      border: 2px solid #065f46;
+      padding: 22px;
+      border-radius: 20px;
+      margin-top: 18px;
+      animation: fadeIn .4s ease;
     }
-    .readme h1, .readme h2, .readme h3 { color: #f0f6fc; }
-    .readme a { color: #58a6ff; }
+    .readme h1, .readme h2, .readme h3 { color: #ecfdf5; }
+    .readme a { color: #6ee7b7; }
     .readme code {
-      background: #0d1117;
-      padding: 2px 4px;
-      border-radius: 4px;
+      background: rgba(52,211,153,.08);
+      padding: 4px 8px;
+      border-radius: 8px;
     }
     .readme pre {
-      background: #0d1117;
-      padding: 12px;
-      border-radius: 8px;
+      background: rgba(52,211,153,.08);
+      padding: 16px;
+      border-radius: 14px;
       overflow-x: auto;
+    }
+
+    .no-readme { opacity: .6; font-style: italic; }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes folderEnter {
+      from { opacity: 0; transform: scale(.96); }
+      to { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -100,14 +173,23 @@
   <ul id="repo-list"></ul>
 
   <div class="viewer" id="viewer">
-    <div class="back" onclick="closeRepo()">← back</div>
-    <h2 id="repo-name"></h2>
-
-    <div class="actions">
-      <a id="open-github" target="_blank">open on github</a>
-      <a id="download-zip" target="_blank">download zip</a>
+    <div class="topbar">
+      <div class="back" onclick="closeRepo()">←</div>
+      <div class="actions">
+        <a id="open-github" class="icon-btn" target="_blank" title="open on github">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+        </a>
+        <a id="download-zip" class="icon-btn download-btn" target="_blank" title="download zip">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 294.863 294.863">
+            <path d="M147.431,0C66.139,0,0,66.139,0,147.431s66.139,147.431,147.431,147.431 s147.431-66.139,147.431-147.431S228.724,0,147.431,0z M147.431,278.545c-72.296,0-131.114-58.818-131.114-131.114S75.135,16.317,147.431,16.317s131.114,58.818,131.114,131.114S219.727,278.545,147.431,278.545z"/>
+            <path d="M162.253,55.375c-23.274,0-41.805,18.324-43.11,41.272v96.114l-8.479-9.649c-4.324-5.167-12.216-5.847-17.389-1.507c-5.156,4.335-5.929,12.031-1.594,17.198l29.605,35.332c.359.397.74.767 1.153,1.099c.451.315.925.604 1.425.859c.566.256 1.164.43 1.779.604c.827.174 1.686.283 2.573.283c.887 0 1.74-.109 2.578-.283c.615-.174 1.213-.348 1.784-.604c.5-.256.979-.544 1.436-.859c.408-.332.8-.696 1.159-1.099l29.659-35.332c4.335-5.167 3.66-12.858-1.501-17.198c-5.167-4.324-11.096-3.655-15.431 1.507l-6.342 9.649V99.116c0-10.666 6.908-19.325 17.563-19.325s18.444 8.659 18.444 19.325c0 6.739 5.02 12.205 11.765 12.205c6.739 0 11.977-5.466 11.977-12.205C206.211,74.988,186.38,55.375,162.253,55.375z" />
+          </svg>
+        </a>
+      </div>
     </div>
 
+    <h2 id="repo-name"></h2>
+    <div class="path" id="path"></div>
     <div id="file-list"></div>
 
     <h3>readme</h3>
@@ -117,12 +199,16 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const username = "redretep";
+    let currentRepo = "";
+    let currentPath = "";
+
     const repoList = document.getElementById("repo-list");
     const viewer = document.getElementById("viewer");
     const fileList = document.getElementById("file-list");
     const readmeBox = document.getElementById("readme");
     const openGithub = document.getElementById("open-github");
     const downloadZip = document.getElementById("download-zip");
+    const pathBox = document.getElementById("path");
 
     fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
       .then(r => r.json())
@@ -130,41 +216,66 @@
         repos.filter(r => !r.fork).forEach(repo => {
           const li = document.createElement("li");
           li.className = "repo";
-          li.innerHTML = `
-            <div class="repo-title">${repo.name}</div>
-            <div class="repo-desc">${repo.description || "no description"}</div>
-          `;
+          li.innerHTML = `<div class=repo-title>${repo.name}</div><div class=repo-desc>${repo.description || "no description"}</div>`;
           li.onclick = () => openRepo(repo.name);
           repoList.appendChild(li);
         });
       });
 
     function openRepo(name) {
-      document.getElementById("repo-name").textContent = name;
+      currentRepo = name;
+      currentPath = "";
       viewer.classList.add("open");
-      fileList.innerHTML = "";
-      readmeBox.textContent = "loading...";
+      document.getElementById("repo-name").textContent = name;
 
       openGithub.href = `https://github.com/${username}/${name}`;
       downloadZip.href = `https://github.com/${username}/${name}/archive/refs/heads/main.zip`;
 
-      fetch(`https://api.github.com/repos/${username}/${name}/contents`)
-        .then(r => r.json())
-        .then(files => {
-          files.forEach(f => {
-            const div = document.createElement("div");
-            div.className = "file";
-            div.textContent = f.type === "dir" ? "📁 " + f.name : "📄 " + f.name;
-            fileList.appendChild(div);
-          });
-        });
+      loadPath();
 
       fetch(`https://api.github.com/repos/${username}/${name}/readme`, {
         headers: { Accept: "application/vnd.github.v3.raw" }
       })
-        .then(r => r.text())
+        .then(r => r.ok ? r.text() : Promise.reject())
         .then(text => readmeBox.innerHTML = marked.parse(text))
-        .catch(() => readmeBox.textContent = "no readme found");
+        .catch(() => readmeBox.innerHTML = '<div class="no-readme">this repo has no readme.md</div>');
+    }
+
+    function loadPath() {
+      fileList.innerHTML = "";
+      pathBox.textContent = currentPath || "/";
+
+      fetch(`https://api.github.com/repos/${username}/${currentRepo}/contents/${currentPath}`)
+        .then(r => r.json())
+        .then(files => {
+          if (currentPath) {
+            const up = document.createElement("div");
+            up.className = "file enter";
+            up.textContent = "⬆ ..";
+            up.onclick = () => {
+              currentPath = currentPath.split("/").slice(0,-1).join("/");
+              loadPath();
+            };
+            fileList.appendChild(up);
+          }
+
+          files.forEach((f, i) => {
+            const div = document.createElement("div");
+            div.className = "file enter";
+            div.style.animationDelay = i * 0.04 + "s";
+            div.textContent = f.type === "dir" ? "📁 " + f.name : "📄 " + f.name;
+            div.onclick = () => {
+              if (f.type === "dir") {
+                div.classList.add("enter");
+                setTimeout(() => {
+                  currentPath = currentPath ? currentPath + "/" + f.name : f.name;
+                  loadPath();
+                }, 160);
+              }
+            };
+            fileList.appendChild(div);
+          });
+        });
     }
 
     function closeRepo() {
