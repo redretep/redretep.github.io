@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <title>redretep github repos</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 20px;
@@ -14,30 +12,86 @@
       background: #0d1117;
       color: #c9d1d9;
     }
-    h1 {
-      margin-bottom: 16px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
+    h1 { margin-bottom: 16px; }
+    ul { list-style: none; padding: 0; }
+
+    .repo {
       background: #161b22;
       border: 1px solid #30363d;
       border-radius: 8px;
       padding: 12px;
       margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
     }
-    a {
+    .repo:hover {
+      transform: scale(1.01);
+      background: #1f2630;
+    }
+    .repo-title { color: #58a6ff; font-weight: bold; }
+    .repo-desc { font-size: 14px; color: #8b949e; margin-top: 6px; }
+
+    .viewer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0d1117;
+      padding: 20px;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform .35s ease;
+    }
+    .viewer.open { transform: translateX(0); }
+
+    .back {
       color: #58a6ff;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 16px;
+      display: inline-block;
     }
-    p {
-      margin: 6px 0 0;
+
+    .actions {
+      margin: 10px 0 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .actions a {
+      padding: 6px 12px;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #58a6ff;
+      background: #161b22;
       font-size: 14px;
-      color: #8b949e;
+    }
+    .actions a:hover { background: #1f2630; }
+
+    .file {
+      padding: 8px;
+      border-bottom: 1px solid #30363d;
+      cursor: pointer;
+    }
+    .file:hover { background: #161b22; }
+
+    .readme {
+      background: #161b22;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .readme h1, .readme h2, .readme h3 { color: #f0f6fc; }
+    .readme a { color: #58a6ff; }
+    .readme code {
+      background: #0d1117;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .readme pre {
+      background: #0d1117;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
     }
   </style>
 </head>
@@ -45,29 +99,77 @@
   <h1>my github repos</h1>
   <ul id="repo-list"></ul>
 
+  <div class="viewer" id="viewer">
+    <div class="back" onclick="closeRepo()">← back</div>
+    <h2 id="repo-name"></h2>
+
+    <div class="actions">
+      <a id="open-github" target="_blank">open on github</a>
+      <a id="download-zip" target="_blank">download zip</a>
+    </div>
+
+    <div id="file-list"></div>
+
+    <h3>readme</h3>
+    <div class="readme" id="readme">loading...</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const username = "redretep";
-    const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`;
+    const repoList = document.getElementById("repo-list");
+    const viewer = document.getElementById("viewer");
+    const fileList = document.getElementById("file-list");
+    const readmeBox = document.getElementById("readme");
+    const openGithub = document.getElementById("open-github");
+    const downloadZip = document.getElementById("download-zip");
 
-    fetch(url)
-      .then(res => res.json())
+    fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
+      .then(r => r.json())
       .then(repos => {
-        const list = document.getElementById("repo-list");
-
-        repos
-          .filter(repo => !repo.fork)
-          .forEach(repo => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-              <a href="${repo.html_url}" target="_blank">${repo.name}</a>
-              <p>${repo.description || "no description"}</p>
-            `;
-            list.appendChild(li);
-          });
-      })
-      .catch(err => {
-        console.error(err);
+        repos.filter(r => !r.fork).forEach(repo => {
+          const li = document.createElement("li");
+          li.className = "repo";
+          li.innerHTML = `
+            <div class="repo-title">${repo.name}</div>
+            <div class="repo-desc">${repo.description || "no description"}</div>
+          `;
+          li.onclick = () => openRepo(repo.name);
+          repoList.appendChild(li);
+        });
       });
+
+    function openRepo(name) {
+      document.getElementById("repo-name").textContent = name;
+      viewer.classList.add("open");
+      fileList.innerHTML = "";
+      readmeBox.textContent = "loading...";
+
+      openGithub.href = `https://github.com/${username}/${name}`;
+      downloadZip.href = `https://github.com/${username}/${name}/archive/refs/heads/main.zip`;
+
+      fetch(`https://api.github.com/repos/${username}/${name}/contents`)
+        .then(r => r.json())
+        .then(files => {
+          files.forEach(f => {
+            const div = document.createElement("div");
+            div.className = "file";
+            div.textContent = f.type === "dir" ? "📁 " + f.name : "📄 " + f.name;
+            fileList.appendChild(div);
+          });
+        });
+
+      fetch(`https://api.github.com/repos/${username}/${name}/readme`, {
+        headers: { Accept: "application/vnd.github.v3.raw" }
+      })
+        .then(r => r.text())
+        .then(text => readmeBox.innerHTML = marked.parse(text))
+        .catch(() => readmeBox.textContent = "no readme found");
+    }
+
+    function closeRepo() {
+      viewer.classList.remove("open");
+    }
   </script>
 </body>
 </html>
