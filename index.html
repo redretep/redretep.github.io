@@ -1,404 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>redreteps github!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 24px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0b1f17;
-      color: #ecfdf5;
-      overflow-x: hidden;
-    }
-
-    h1 {
-      margin-bottom: 24px;
-      font-size: 28px;
-      color: #34d399;
-      animation: floatIn .6s ease both;
-      letter-spacing: -0.5px;
-    }
-
-    ul { list-style: none; padding: 0; margin: 0; }
-
-    .repo {
-      background: rgba(6, 95, 70, 0.3);
-      border: 1px solid #065f46;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: floatIn .5s ease both;
-      position: relative;
-      overflow: hidden;
-    }
-    .repo:hover {
-      transform: translateY(-2px);
-      background: rgba(6, 95, 70, 0.6);
-      border-color: #34d399;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    }
-    .repo-title { color: #6ee7b7; font-weight: 600; font-size: 18px; margin-bottom: 4px; }
-    .repo-desc { font-size: 14px; color: #a7f3d0; line-height: 1.5; opacity: 0.9; }
-
-    /* Viewer Panel */
-    .viewer {
-      position: fixed;
-      inset: 0;
-      background: #0b1f17;
-      padding: 24px;
-      overflow-y: auto;
-      transform: translateX(100%);
-      transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 50;
-    }
-    .viewer.open { transform: translateX(0); }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-      position: sticky;
-      top: 0;
-      background: #0b1f17;
-      padding-bottom: 12px;
-      z-index: 10;
-      border-bottom: 1px solid #065f46;
-    }
-
-    .back {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: rgba(6, 95, 70, 0.3);
-      color: #34d399;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 18px;
-      transition: all .2s ease;
-      border: 1px solid transparent;
-    }
-    .back:hover {
-      background: rgba(52, 211, 153, 0.15);
-      color: #6ee7b7;
-      border-color: #34d399;
-    }
-
-    .actions { display: flex; gap: 12px; }
-
-    .icon-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
-      padding: 0 16px;
-      gap: 8px;
-      border-radius: 12px;
-      background: rgba(52, 211, 153, 0.1);
-      border: 1px solid rgba(52, 211, 153, 0.2);
-      color: #34d399;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all .2s ease;
-    }
-
-    .icon-btn:hover {
-      background: #34d399;
-      color: #064e3b;
-      border-color: #34d399;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(52, 211, 153, 0.25);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pidi // @redretep</title>
     
-    .icon-btn svg {
-      width: 18px;
-      height: 18px;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     
-    .icon-btn .github-icon { fill: currentColor; }
-    .icon-btn .download-icon {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    h2#repo-name {
-      margin: 0;
-      color: #ecfdf5;
-      font-size: 24px;
-    }
+    <style>
+        :root {
+            /* Material You 3 Green Dark Palette */
+            --md-sys-color-primary: #86efac;
+            --md-sys-color-on-primary: #00391c;
+            --md-sys-color-primary-container: #00522c;
+            --md-sys-color-on-primary-container: #a3ffc9;
+            --md-sys-color-secondary: #b9ccbe;
+            --md-sys-color-surface: #0b0f0c; 
+            --md-sys-color-surface-container: #171d18;
+            --md-sys-color-surface-container-high: #212922;
+            --md-sys-color-on-surface: #e1e3df;
+            --md-sys-color-on-surface-variant: #c1c9bf;
+            --md-sys-color-outline: #8b938a;
+            
+            --f-display: 'Outfit', sans-serif;
+            --f-body: 'Inter', sans-serif;
+            --f-mono: 'JetBrains Mono', monospace;
+            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-    .path {
-      font-family: monospace;
-      font-size: 13px;
-      color: #6ee7b7;
-      margin: 8px 0 20px 0;
-      padding: 8px 12px;
-      background: rgba(0,0,0,0.2);
-      border-radius: 8px;
-      display: inline-block;
-      animation: fadeIn .3s ease;
-    }
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none !important;
+        }
 
-    .file-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+        body {
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: var(--f-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    .file {
-      display: flex;
-      align-items: center;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      background: rgba(255,255,255,0.03);
-      color: #d1fae5;
-      font-size: 14px;
-      transition: all .2s ease;
-      animation: slideIn .25s ease both;
-    }
-    .file:hover {
-      background: rgba(52, 211, 153, 0.1);
-      border-color: rgba(52, 211, 153, 0.3);
-      padding-left: 18px;
-      color: #fff;
-    }
-    .file span { margin-right: 10px; opacity: 0.7; }
-    
-    .file.enter {
-      background: rgba(52, 211, 153, 0.15);
-      border: 1px solid rgba(52, 211, 153, 0.2);
-      color: #6ee7b7;
-      font-weight: 600;
-    }
+        /* --- Stunning Background (No hard stops) --- */
+        .bg-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, #111a14 0%, #0b0f0c 100%);
+        }
+        .bg-glow {
+            position: absolute; top: -10%; left: 50%; width: 120%; height: 80%;
+            background: radial-gradient(circle at center, rgba(134, 239, 172, 0.15) 0%, transparent 70%);
+            transform: translateX(-50%);
+            filter: blur(80px);
+            animation: pulse 10s ease-in-out infinite alternate;
+        }
+        @keyframes pulse { from { opacity: 0.5; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(1.1); } }
 
-    h3 { color: #6ee7b7; margin-top: 32px; border-bottom: 1px solid #065f46; padding-bottom: 8px; }
-    
-    .readme {
-      background: #0f291e;
-      border: 1px solid #065f46;
-      padding: 24px;
-      border-radius: 16px;
-      margin-top: 16px;
-      line-height: 1.6;
-      font-size: 15px;
-      animation: fadeIn .4s ease;
-      color: #d1fae5;
-    }
+        /* --- Custom Green Cursor --- */
+        #cursor-dot {
+            position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+            background: var(--md-sys-color-primary); border-radius: 50%;
+            pointer-events: none; z-index: 10000; transform: translate(-50%, -50%);
+        }
+        #cursor-ring {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border: 2px solid var(--md-sys-color-primary); border-radius: 50%;
+            pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
+            transition: width 0.3s var(--spring), height 0.3s var(--spring), border-width 0.3s;
+        }
+        .hovering #cursor-ring { width: 60px; height: 60px; border-width: 4px; background: rgba(134, 239, 172, 0.1); }
 
-    .status-msg { opacity: .5; padding: 20px; font-style: italic; }
+        /* --- M3 Top Navigation Bar --- */
+        .m3-nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 4rem; z-index: 1000;
+            background: rgba(11, 15, 12, 0.7); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-brand { font-family: var(--f-display); font-weight: 800; font-size: 1.2rem; color: var(--md-sys-color-primary); }
+        .nav-links { display: flex; gap: 8px; background: var(--md-sys-color-surface-container); padding: 6px; border-radius: 100px; }
+        .nav-item {
+            padding: 10px 24px; border-radius: 100px; text-decoration: none;
+            color: var(--md-sys-color-on-surface-variant); font-family: var(--f-display);
+            font-weight: 600; font-size: 0.9rem; transition: 0.3s var(--spring);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav-item:hover { background: var(--md-sys-color-primary-container); color: var(--md-sys-color-primary); }
+        .nav-item.active { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
 
-    @keyframes floatIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: none; }
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-8px); }
-      to { opacity: 1; transform: none; }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0b1f17; }
-    ::-webkit-scrollbar-thumb { background: #065f46; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
-  </style>
+        /* --- Hero Section --- */
+        .hero {
+            padding-top: 200px; padding-bottom: 100px;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        .profile-wrapper { position: relative; margin-bottom: 2rem; }
+        .profile-img {
+            width: 140px; height: 140px; border-radius: 48px;
+            border: 4px solid var(--md-sys-color-primary-container);
+            animation: profileFloat 6s ease-in-out infinite;
+        }
+        @keyframes profileFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
+
+        /* --- Text Reveal Animations --- */
+        .reveal-text { overflow: hidden; display: block; }
+        .reveal-text span {
+            display: block; transform: translateY(110%);
+            animation: textRise 1s var(--spring) forwards;
+        }
+        @keyframes textRise { to { transform: translateY(0); } }
+
+        .hero h1 {
+            font-family: var(--f-display); font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800; line-height: 1; letter-spacing: -2px; margin-bottom: 1rem;
+        }
+        .hero p {
+            max-width: 600px; font-size: 1.2rem; opacity: 0.8;
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Projects Grid --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .section-title { font-family: var(--f-display); font-size: 2.5rem; margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--md-sys-color-outline); opacity: 0.2; }
+
+        .repo-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .repo-card {
+            background: var(--md-sys-color-surface-container); border-radius: 32px;
+            padding: 2.5rem; transition: 0.4s var(--spring); position: relative;
+            border: 1px solid transparent; display: flex; flex-direction: column;
+        }
+        .repo-card:hover {
+            background: var(--md-sys-color-surface-container-high);
+            transform: scale(1.02) translateY(-8px);
+            border-color: var(--md-sys-color-primary);
+        }
+        .repo-card h3 { font-family: var(--f-display); font-size: 1.6rem; color: var(--md-sys-color-primary); margin-bottom: 0.5rem; }
+        .repo-card p { opacity: 0.7; font-size: 0.95rem; margin-bottom: 2rem; flex-grow: 1; }
+        .repo-meta { display: flex; gap: 1rem; font-family: var(--f-mono); font-size: 0.8rem; opacity: 0.6; }
+
+        /* --- Modal System --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px); z-index: 2000; display: none;
+            justify-content: center; align-items: center; padding: 2rem;
+        }
+        .modal-content {
+            background: var(--md-sys-color-surface); width: 100%; max-width: 1000px;
+            height: 85vh; border-radius: 40px; overflow: hidden;
+            display: flex; flex-direction: column; animation: modalPop 0.5s var(--spring);
+            border: 1px solid var(--md-sys-color-surface-container-high);
+        }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.9) translateY(40px); } }
+
+        .modal-header { padding: 2rem; background: var(--md-sys-color-surface-container); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 3rem; overflow-y: auto; flex: 1; color: #cbd5e1; }
+        .modal-body h1, h2 { color: var(--md-sys-color-primary); font-family: var(--f-display); margin: 1.5rem 0 1rem; }
+        .modal-body code { background: #000; padding: 0.2rem 0.4rem; border-radius: 6px; font-family: var(--f-mono); }
+        .modal-body pre { background: #000; padding: 1.5rem; border-radius: 20px; overflow-x: auto; margin: 1rem 0; }
+
+        .m3-btn {
+            height: 56px; padding: 0 32px; border-radius: 100px;
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--f-display); font-weight: 700; text-decoration: none;
+            transition: 0.3s var(--spring); border: none; font-size: 1rem;
+        }
+        .btn-filled { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+        .btn-tonal { background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
+        .m3-btn:hover { transform: scale(1.05); border-radius: 20px; }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--md-sys-color-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--md-sys-color-surface-container-high); border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            .m3-nav { padding: 0 1rem; height: 70px; }
+            .nav-links { display: none; }
+            .hero { padding-top: 140px; }
+        }
+    </style>
 </head>
 <body>
-  <h1 id="header">redreteps repos</h1>
-  <ul id="repo-list"></ul>
-  <div id="repo-loading" class="status-msg">fetching the repositories...</div>
 
-  <div class="viewer" id="viewer">
-    <div class="topbar">
-      <div class="back" onclick="closeRepo()">←</div>
-      <div class="actions">
-        <a id="open-github" class="icon-btn" target="_blank">
-          <svg class="github-icon" viewBox="0 0 24 24">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          GitHub
-        </a>
-        <a id="download-zip" class="icon-btn" target="_blank">
-          <svg class="download-icon" viewBox="0 0 24 24">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          ZIP
-        </a>
-      </div>
+    <div class="bg-wrapper"><div class="bg-glow"></div></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <nav class="m3-nav">
+        <div class="nav-brand">REDRATEP</div>
+        <div class="nav-links">
+            <a href="#" class="nav-item active"><span class="material-symbols-rounded">home</span> Home</a>
+            <a href="#projects" class="nav-item"><span class="material-symbols-rounded">code</span> Projects</a>
+            <a href="https://github.com/redretep" target="_blank" class="nav-item"><span class="material-symbols-rounded">link</span> GitHub</a>
+        </div>
+        <a href="mailto:hello@redretep.dev" class="m3-btn btn-tonal" style="height: 48px; padding: 0 20px; font-size: 0.9rem;">Contact</a>
+    </nav>
+
+    <header class="hero">
+        <div class="profile-wrapper">
+            <img src="https://github.com/redretep.png" alt="Pidi" class="profile-img">
+        </div>
+        
+        <h1 class="reveal-text">
+            <span style="animation-delay: 0.1s;">Web Architecture</span>
+        </h1>
+        <h1 class="reveal-text">
+            <span style="color: var(--md-sys-color-primary); animation-delay: 0.3s;">Designed for Tomorrow.</span>
+        </h1>
+        
+        <p>15-year-old developer crafting high-end, expressive experiences with HTML, CSS, JavaScript, PHP, and TypeScript.</p>
+    </header>
+
+    <main class="container" id="projects">
+        <h2 class="section-title">Open Source Repos</h2>
+        
+        <div id="loader" style="display: flex; justify-content: center; padding: 4rem;">
+            <span class="material-symbols-rounded" style="animation: spin 2s linear infinite; font-size: 3rem; color: var(--md-sys-color-primary);">sync</span>
+        </div>
+        
+        <div class="repo-grid" id="repo-grid"></div>
+    </main>
+
+    <footer style="padding: 6rem 2rem; text-align: center; opacity: 0.5; font-size: 0.9rem;">
+        <p>© 2024 REDRETEP • Built with Material You 3 Expressive</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Project Details</h2>
+                <button onclick="closeModal()" class="m3-btn btn-tonal" style="width: 48px; height: 48px; padding: 0; border-radius: 50%;">
+                    <span class="material-symbols-rounded">close</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div style="padding: 2rem; background: var(--md-sys-color-surface-container); display: flex; gap: 1rem;">
+                <a id="modal-gh-link" href="#" target="_blank" class="m3-btn btn-filled">
+                    <span class="material-symbols-rounded">open_in_new</span> View on GitHub
+                </a>
+            </div>
+        </div>
     </div>
 
-    <h2 id="repo-name"></h2>
-    <div class="path" id="path">/</div>
-    <div id="file-list" class="file-grid"></div>
+    <script>
+        // Cursor Logic
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
 
-    <h3>README.md</h3>
-    <div class="readme" id="readme">loading...</div>
-  </div>
+        window.addEventListener('mousemove', (e) => {
+            const { clientX: x, clientY: y } = e;
+            dot.style.left = `${x}px`;
+            dot.style.top = `${y}px`;
+            
+            ring.animate({
+                left: `${x}px`,
+                top: `${y}px`
+            }, { duration: 500, fill: "forwards" });
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    const username = "redretep";
-    let currentRepo = "";
-    let currentPath = "";
-    let allRepos = [];
-
-    const repoList = document.getElementById("repo-list");
-    const repoLoading = document.getElementById("repo-loading");
-    const viewer = document.getElementById("viewer");
-    const fileList = document.getElementById("file-list");
-    const readmeBox = document.getElementById("readme");
-    const openGithub = document.getElementById("open-github");
-    const downloadZip = document.getElementById("download-zip");
-    const pathBox = document.getElementById("path");
-    const repoNameHeader = document.getElementById("repo-name");
-    const header = document.getElementById("header");
-
-    // Recursive fetch to handle pagination and get ALL repos
-    async function fetchAllRepos(page = 1) {
-      try {
-        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100&page=${page}`);
-        const data = await response.json();
-        
-        if (Array.isArray(data) && data.length > 0) {
-          allRepos = [...allRepos, ...data];
-          // If we got a full page, there might be more
-          if (data.length === 100) {
-            return fetchAllRepos(page + 1);
-          }
-        }
-        renderRepos();
-      } catch (err) {
-        console.error("Error fetching repos:", err);
-        repoLoading.textContent = "failed to load repositories.";
-      }
-    }
-
-    function renderRepos() {
-      repoList.innerHTML = "";
-      repoLoading.style.display = "none";
-      
-      // Sort all gathered repos by updated date
-      allRepos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      
-      const filtered = allRepos.filter(r => !r.fork);
-      header.textContent = `redretep repos (${filtered.length})`;
-
-      filtered.forEach(repo => {
-        const li = document.createElement("li");
-        li.className = "repo";
-        li.innerHTML = `
-          <div class="repo-title">${repo.name}</div>
-          <div class="repo-desc">${repo.description || "no description provided"}</div>
-        `;
-        li.onclick = () => openRepo(repo.name);
-        repoList.appendChild(li);
-      });
-    }
-
-    function openRepo(name) {
-      currentRepo = name;
-      currentPath = "";
-      viewer.classList.add("open");
-      repoNameHeader.textContent = name;
-      document.body.style.overflow = "hidden";
-
-      openGithub.href = `https://github.com/${username}/${name}`;
-      downloadZip.href = `https://github.com/${username}/${name}/archive/refs/heads/main.zip`;
-
-      loadPath();
-      loadReadme(name);
-    }
-
-    function loadReadme(name) {
-      readmeBox.innerHTML = '<div style="opacity:0.6">fetching readme...</div>';
-      fetch(`https://api.github.com/repos/${username}/${name}/readme`, {
-        headers: { Accept: "application/vnd.github.v3.raw" }
-      })
-      .then(r => r.ok ? r.text() : Promise.reject())
-      .then(text => {
-        const baseUrl = `https://raw.githubusercontent.com/${username}/${name}/main/`;
-        readmeBox.innerHTML = marked.parse(text).replace(/src="\.\//g, `src="${baseUrl}`);
-      })
-      .catch(() => {
-        readmeBox.innerHTML = '<div style="opacity:0.5; font-style: italic; text-align: center; padding: 20px;">no readme.md found</div>';
-      });
-    }
-
-    async function loadPath() {
-      fileList.innerHTML = '<div class="status-msg">loading files...</div>';
-      pathBox.textContent = currentPath || "/";
-
-      try {
-        const r = await fetch(`https://api.github.com/repos/${username}/${currentRepo}/contents/${currentPath}`);
-        const files = await r.json();
-        fileList.innerHTML = "";
-        
-        if (!Array.isArray(files)) {
-          fileList.innerHTML = `<div class="status-msg">${files.message || "unable to load content"}</div>`;
-          return;
-        }
-
-        files.sort((a, b) => {
-          if (a.type === b.type) return a.name.localeCompare(b.name);
-          return a.type === "dir" ? -1 : 1;
+            if (e.target.closest('a, button, .repo-card')) {
+                document.body.classList.add('hovering');
+            } else {
+                document.body.classList.remove('hovering');
+            }
         });
 
-        if (currentPath) {
-          const up = document.createElement("div");
-          up.className = "file enter";
-          up.innerHTML = `<span>⬆</span> ..`;
-          up.onclick = () => {
-            currentPath = currentPath.split("/").slice(0,-1).join("/");
-            loadPath();
-          };
-          fileList.appendChild(up);
+        // Github Logic
+        const USERNAME = 'redretep';
+        async function loadRepos() {
+            try {
+                const res = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=12`);
+                const repos = await res.json();
+                const grid = document.getElementById('repo-grid');
+                document.getElementById('loader').style.display = 'none';
+
+                repos.forEach((repo, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'repo-card';
+                    card.style.animation = `fadeIn 0.8s ease-out forwards ${i * 0.1}s`;
+                    card.style.opacity = 0;
+                    
+                    card.innerHTML = `
+                        <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); font-size: 2.5rem; margin-bottom: 1rem;">folder_open</span>
+                        <h3>${repo.name}</h3>
+                        <p>${repo.description || "A clean project exploring the frontiers of web development."}</p>
+                        <div class="repo-meta">
+                            <span><span class="material-symbols-rounded" style="font-size: 14px">star</span> ${repo.stargazers_count}</span>
+                            <span><span class="material-symbols-rounded" style="font-size: 14px">code</span> ${repo.language || 'HTML'}</span>
+                        </div>
+                    `;
+                    card.onclick = () => openRepo(repo);
+                    grid.appendChild(card);
+                });
+            } catch (e) { console.error("GitHub Fetch Error", e); }
         }
 
-        files.forEach((f, i) => {
-          const div = document.createElement("div");
-          div.className = "file";
-          div.style.animationDelay = (i * 0.02) + "s";
-          const icon = f.type === "dir" ? "📁" : "📄";
-          div.innerHTML = `<span>${icon}</span> ${f.name}`;
-          if (f.type === "dir") {
-             div.onclick = () => {
-                currentPath = currentPath ? currentPath + "/" + f.name : f.name;
-                loadPath();
-              };
-          }
-          fileList.appendChild(div);
-        });
-      } catch (e) {
-        fileList.innerHTML = '<div class="status-msg">error loading files.</div>';
-      }
-    }
+        async function openRepo(repo) {
+            const modal = document.getElementById('modal');
+            const body = document.getElementById('modal-body');
+            document.getElementById('modal-title').innerText = repo.name;
+            document.getElementById('modal-gh-link').href = repo.html_url;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            body.innerHTML = '<p>Fetching README content...</p>';
 
-    function closeRepo() {
-      viewer.classList.remove("open");
-      document.body.style.overflow = "";
-    }
+            try {
+                const res = await fetch(`https://api.github.com/repos/${USERNAME}/${repo.name}/readme`, {
+                    headers: { 'Accept': 'application/vnd.github.raw' }
+                });
+                const content = res.ok ? await res.text() : '# ' + repo.name + '\nNo description found.';
+                body.innerHTML = marked.parse(content);
+            } catch (e) { body.innerHTML = 'Error loading repository data.'; }
+        }
 
-    // Start fetching
-    fetchAllRepos();
-  </script>
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = (e) => { if(e.target.id === 'modal') closeModal(); }
+        
+        // Init
+        loadRepos();
+    </script>
+
+    <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 </body>
 </html>
