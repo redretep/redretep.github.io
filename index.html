@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pidi // @redretep</title>
+    <title>pidi - redretep</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -197,32 +197,32 @@
     <div id="cursor-ring"></div>
 
     <nav class="m3-nav">
-        <div class="nav-brand">REDRATEP</div>
+        <div class="nav-brand">redretep/pidi</div>
         <div class="nav-links">
             <a href="#" class="nav-item active"><span class="material-symbols-rounded">home</span> Home</a>
             <a href="#projects" class="nav-item"><span class="material-symbols-rounded">code</span> Projects</a>
             <a href="https://github.com/redretep" target="_blank" class="nav-item"><span class="material-symbols-rounded">link</span> GitHub</a>
         </div>
-        <a href="mailto:hello@redretep.dev" class="m3-btn btn-tonal" style="height: 48px; padding: 0 20px; font-size: 0.9rem;">Contact</a>
+        <a href="mailto:peterdbaltes@gmail.com" class="m3-btn btn-tonal" style="height: 48px; padding: 0 20px; font-size: 0.9rem;">Contact</a>
     </nav>
 
     <header class="hero">
         <div class="profile-wrapper">
-            <img src="https://github.com/redretep.png" alt="Pidi" class="profile-img">
+            <img src="https://github.com/redretep.png" alt="pidi" class="profile-img">
         </div>
         
         <h1 class="reveal-text">
-            <span style="animation-delay: 0.1s;">Web Architecture</span>
+            <span style="animation-delay: 0.1s;">hey, im pidi</span>
         </h1>
         <h1 class="reveal-text">
-            <span style="color: var(--md-sys-color-primary); animation-delay: 0.3s;">Designed for Tomorrow.</span>
+            <span style="color: var(--md-sys-color-primary); animation-delay: 0.3s;">the frontend dev</span>
         </h1>
         
-        <p>15-year-old developer crafting high-end, expressive experiences with HTML, CSS, JavaScript, PHP, and TypeScript.</p>
+        <p>im a 15y/o developer crafting high-end and expressive websites.</p>
     </header>
 
     <main class="container" id="projects">
-        <h2 class="section-title">Open Source Repos</h2>
+        <h2 class="section-title">my projects</h2>
         
         <div id="loader" style="display: flex; justify-content: center; padding: 4rem;">
             <span class="material-symbols-rounded" style="animation: spin 2s linear infinite; font-size: 3rem; color: var(--md-sys-color-primary);">sync</span>
@@ -232,14 +232,14 @@
     </main>
 
     <footer style="padding: 6rem 2rem; text-align: center; opacity: 0.5; font-size: 0.9rem;">
-        <p>© 2024 REDRETEP • Built with Material You 3 Expressive</p>
+        <p>© 2026 redretep • built with pure html, css and js</p>
     </footer>
 
     <!-- Modal -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modal-title">Project Details</h2>
+                <h2 id="modal-title">project details</h2>
                 <button onclick="closeModal()" class="m3-btn btn-tonal" style="width: 48px; height: 48px; padding: 0; border-radius: 50%;">
                     <span class="material-symbols-rounded">close</span>
                 </button>
@@ -302,7 +302,7 @@
                     card.onclick = () => openRepo(repo);
                     grid.appendChild(card);
                 });
-            } catch (e) { console.error("GitHub Fetch Error", e); }
+            } catch (e) { console.error("GitHub fetch Error", e); }
         }
 
         async function openRepo(repo) {
@@ -313,7 +313,7 @@
             
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            body.innerHTML = '<p>Fetching README content...</p>';
+            body.innerHTML = '<p>fetching README content...</p>';
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${USERNAME}/${repo.name}/readme`, {
