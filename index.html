@@ -46,7 +46,83 @@
             line-height: 1.6;
         }
 
-        /* --- Stunning Background (No hard stops) --- */
+        /* --- Improved Loading Screen --- */
+        #loading-screen {
+            position: fixed; inset: 0;
+            background: var(--md-sys-color-surface);
+            z-index: 99999;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease;
+        }
+        .loader-container {
+            position: relative;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        /* Updated Circular Loader */
+        .loader-visual {
+            position: relative; width: 100px; height: 100px;
+            margin-bottom: 2rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .loader-track {
+            position: absolute; inset: 0;
+            border: 4px solid rgba(134, 239, 172, 0.1);
+            border-radius: 50%;
+        }
+        .loader-fill {
+            position: absolute; inset: 0;
+            border: 4px solid transparent;
+            border-top-color: var(--md-sys-color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .loader-progress-text {
+            font-family: var(--f-mono);
+            font-size: 1rem;
+            color: var(--md-sys-color-primary);
+            font-weight: 600;
+        }
+
+        .loader-text {
+            font-family: var(--f-display);
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            color: var(--md-sys-color-primary);
+            text-transform: uppercase;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .loader-text span {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: textReveal 0.5s var(--spring) forwards;
+        }
+
+        @keyframes textReveal { to { transform: translateY(0); } }
+
+        /* --- Mobile Warning --- */
+        #mobile-warning {
+            position: fixed; inset: 0;
+            background: rgba(11, 15, 12, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 90000;
+            display: none; 
+            flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 2rem; text-align: center;
+        }
+        .warning-card {
+            background: var(--md-sys-color-surface-container);
+            padding: 2.5rem; border-radius: 32px;
+            border: 1px solid var(--md-sys-color-primary-container);
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* --- Background --- */
         .bg-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
@@ -75,7 +151,7 @@
         }
         .hovering #cursor-ring { width: 60px; height: 60px; border-width: 4px; background: rgba(134, 239, 172, 0.1); }
 
-        /* --- M3 Top Navigation Bar --- */
+        /* --- Navigation --- */
         .m3-nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 80px;
             display: flex; align-items: center; justify-content: space-between;
@@ -107,7 +183,7 @@
         }
         @keyframes profileFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
 
-        /* --- Text Reveal Animations --- */
+        /* --- Animations --- */
         .reveal-text { overflow: hidden; display: block; }
         .reveal-text span {
             display: block; transform: translateY(110%);
@@ -124,6 +200,7 @@
             animation: fadeIn 1.5s ease-out;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* --- Projects Grid --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
@@ -164,15 +241,16 @@
 
         .modal-header { padding: 2rem; background: var(--md-sys-color-surface-container); display: flex; justify-content: space-between; align-items: center; }
         .modal-body { padding: 3rem; overflow-y: auto; flex: 1; color: #cbd5e1; }
-        .modal-body h1, h2 { color: var(--md-sys-color-primary); font-family: var(--f-display); margin: 1.5rem 0 1rem; }
+        .modal-body h1, .modal-body h2 { color: var(--md-sys-color-primary); font-family: var(--f-display); margin: 1.5rem 0 1rem; }
         .modal-body code { background: #000; padding: 0.2rem 0.4rem; border-radius: 6px; font-family: var(--f-mono); }
         .modal-body pre { background: #000; padding: 1.5rem; border-radius: 20px; overflow-x: auto; margin: 1rem 0; }
 
         .m3-btn {
             height: 56px; padding: 0 32px; border-radius: 100px;
-            display: inline-flex; align-items: center; gap: 12px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
             font-family: var(--f-display); font-weight: 700; text-decoration: none;
             transition: 0.3s var(--spring); border: none; font-size: 1rem;
+            cursor: pointer !important;
         }
         .btn-filled { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
         .btn-tonal { background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
@@ -187,10 +265,37 @@
             .m3-nav { padding: 0 1rem; height: 70px; }
             .nav-links { display: none; }
             .hero { padding-top: 140px; }
+            .repo-grid { grid-template-columns: 1fr; }
+            #cursor-dot, #cursor-ring { display: none; }
+            * { cursor: auto !important; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Smooth Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-container">
+            <div class="loader-visual">
+                <div class="loader-track"></div>
+                <div class="loader-fill"></div>
+                <div class="loader-progress-text" id="loader-pct">0%</div>
+            </div>
+            <div class="loader-text" id="loader-text-wrapper">
+                <!-- Text per JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Warning -->
+    <div id="mobile-warning">
+        <div class="warning-card">
+            <span class="material-symbols-rounded" style="font-size: 4rem; color: var(--md-sys-color-primary); margin-bottom: 1rem;">devices</span>
+            <h2 style="font-family: var(--f-display); margin-bottom: 1rem;">mobile warning</h2>
+            <p style="opacity: 0.8; margin-bottom: 2rem;">this website uses complex effects and animations that may affect performance. for the best experience consider using a pc.</p>
+            <button onclick="dismissWarning()" class="m3-btn btn-filled" style="width: 100%; justify-content: center;">close pop-up</button>
+        </div>
+    </div>
 
     <div class="bg-wrapper"><div class="bg-glow"></div></div>
     <div id="cursor-dot"></div>
@@ -235,7 +340,7 @@
         <p>© 2026 redretep • built with pure html, css and js</p>
     </footer>
 
-    <!-- Modal -->
+    <!-- project modal -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -247,18 +352,72 @@
             <div class="modal-body" id="modal-body"></div>
             <div style="padding: 2rem; background: var(--md-sys-color-surface-container); display: flex; gap: 1rem;">
                 <a id="modal-gh-link" href="#" target="_blank" class="m3-btn btn-filled">
-                    <span class="material-symbols-rounded">open_in_new</span> View on GitHub
+                    <span class="material-symbols-rounded">open_in_new</span> view on github
                 </a>
             </div>
         </div>
     </div>
 
     <script>
+        // Loader Text
+        const loaderText = "loading...";
+        const textWrapper = document.getElementById('loader-text-wrapper');
+        loaderText.split('').forEach((char, i) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.animationDelay = `${i * 0.05}s`;
+            textWrapper.appendChild(span);
+        });
+
+        // Loader Progress Logic
+        const progressEl = document.getElementById('loader-pct');
+        let progress = 0;
+        const interval = setInterval(() => {
+            if(progress < 100) {
+                progress += Math.floor(Math.random() * 10) + 1;
+                if(progress > 100) progress = 100;
+                progressEl.textContent = `${progress}%`;
+            } else {
+                clearInterval(interval);
+            }
+        }, 120);
+
+        // Loader Exit
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loading-screen');
+            // Ensure we hit 100% before closing
+            progress = 100;
+            progressEl.textContent = `100%`;
+            
+            setTimeout(() => {
+                loader.style.transform = 'translateY(-100%)';
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.visibility = 'hidden';
+                    checkMobile();
+                }, 1000);
+            }, 800); 
+        });
+
+        // Mobile Warning Logic
+        function checkMobile() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('mobile-warning').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function dismissWarning() {
+            document.getElementById('mobile-warning').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
         // Cursor Logic
         const dot = document.getElementById('cursor-dot');
         const ring = document.getElementById('cursor-ring');
 
         window.addEventListener('mousemove', (e) => {
+            if (window.innerWidth <= 768) return;
             const { clientX: x, clientY: y } = e;
             dot.style.left = `${x}px`;
             dot.style.top = `${y}px`;
@@ -293,7 +452,7 @@
                     card.innerHTML = `
                         <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); font-size: 2.5rem; margin-bottom: 1rem;">folder_open</span>
                         <h3>${repo.name}</h3>
-                        <p>${repo.description || "--No Repo description--"}</p>
+                        <p>${repo.description || "--no repo description--"}</p>
                         <div class="repo-meta">
                             <span><span class="material-symbols-rounded" style="font-size: 14px">star</span> ${repo.stargazers_count}</span>
                             <span><span class="material-symbols-rounded" style="font-size: 14px">code</span> ${repo.language || 'HTML'}</span>
@@ -334,7 +493,5 @@
         // Init
         loadRepos();
     </script>
-
-    <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 </body>
 </html>
