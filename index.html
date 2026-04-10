@@ -60,7 +60,6 @@
             display: flex; flex-direction: column; align-items: center;
         }
         
-        /* Updated Circular Loader */
         .loader-visual {
             position: relative; width: 100px; height: 100px;
             margin-bottom: 2rem;
@@ -225,6 +224,35 @@
         .repo-card p { opacity: 0.7; font-size: 0.95rem; margin-bottom: 2rem; flex-grow: 1; }
         .repo-meta { display: flex; gap: 1rem; font-family: var(--f-mono); font-size: 0.8rem; opacity: 0.6; }
 
+        /* --- Badge Grid Section --- */
+        .badge-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding-bottom: 4rem;
+        }
+        /* Group hover effect: dim everything in the grid when the grid is hovered */
+        .badge-grid:hover a, 
+        .badge-grid:hover img {
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        /* Override: ensure the specific hovered item stays bright and scales up */
+        .badge-grid a:hover,
+        .badge-grid a:hover img,
+        .badge-grid img:hover {
+            opacity: 1 !important;
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        .badge-grid img {
+            height: 31px;
+            transition: 0.3s var(--spring);
+            border-radius: 2px;
+            display: block;
+        }
+
         /* --- Modal System --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.9);
@@ -336,6 +364,33 @@
         <div class="repo-grid" id="repo-grid"></div>
     </main>
 
+    <!-- Badges Section -->
+    <section class="container" style="padding-top: 0;">
+        <h2 class="section-title">webrings & badges</h2>
+        <div class="badge-grid">
+            <a href="https://monochrome.tf" target="_blank"><img src="https://monochrome.tf/assets/button/880x310.png" alt="Free Music Streaming" loading="lazy"></a>
+            <a href="https://fmhy.net/" target="_blank"><img src="https://prigoana.com/buttons/fmhy88x31.png" alt="Free Shit" loading="lazy"></a>
+            <a href="https://www.headphonesty.com/2024/12/spotify-ceo-becomes-richer-musician-history/" target="_blank"><img src="https://prigoana.com/buttons/shitify.gif" alt="Shitify" loading="lazy"></a>
+            <a href="https://lucida.to/" target="_blank"><img src="https://prigoana.com/buttons/lucida.png" alt="lucida.to" loading="lazy"></a>
+            <a href="https://browsers.avoidthehack.com/" target="_blank"><img src="https://prigoana.com/buttons/chrome.gif" alt="Anti-Chrome" loading="lazy"></a>
+            <a href="https://www.orwell.org/" target="_blank"><img src="https://prigoana.com/buttons/chromeevil.gif" alt="Chrome is Evil" loading="lazy"></a>
+            <a href="https://thefire.org/" target="_blank"><img src="https://prigoana.com/buttons/freespeech.gif" alt="Free speech" loading="lazy"></a>
+            <a href="https://archive.org/" target="_blank"><img src="https://prigoana.com/buttons/internetarchive.gif" alt="Internet Archive" loading="lazy"></a>
+            <a href="https://fmhy.net/privacy" target="_blank"><img src="https://prigoana.com/buttons/internetprivacy.gif" alt="Privacy" loading="lazy"></a>
+            <a href="https://wiki.prigoana.com/" target="_blank"><img src="https://prigoana.com/buttons/parentaladvisory.png" alt="Parental Advisory" loading="lazy"></a>
+            <a href="https://fmhy.net/" target="_blank"><img src="https://prigoana.com/buttons/piracy.gif" alt="Piracy" loading="lazy"></a>
+            <a href="https://repair.eu/" target="_blank"><img src="https://prigoana.com/buttons/right2repair.png" alt="Right to Repair" loading="lazy"></a>
+            <a href="https://ublockorigin.com/" target="_blank"><img src="https://prigoana.com/buttons/ublock.png" alt="uBlock" loading="lazy"></a>
+            <a href="https://wiki.prigoana.com/" target="_blank"><img src="https://prigoana.com/buttons/wikipedia.gif" alt="Wiki" loading="lazy"></a>
+            <a href=""><img src="https://prigoana.com/buttons/amen.avif" alt="Amen Break" loading="lazy"></a>
+            <a href="https://europarl.europa.eu/"><img src="https://prigoana.com/buttons/eu.avif" alt="EU" loading="lazy"></a>
+            <img src="https://yesterhost.neocities.org/archive/buttons/button170.gif" alt="button 170" loading="lazy">
+            <img src="https://yesterhost.neocities.org/archive/buttons/button257.gif" alt="button 257" loading="lazy">
+            <img src="https://yesterhost.neocities.org/archive/buttons/button263.png" alt="button 263" loading="lazy">
+            <img src="https://cyber.dabamos.de/88x31/bestvw.gif" alt="best viewed with" loading="lazy">
+        </div>
+    </section>
+
     <footer style="padding: 6rem 2rem; text-align: center; opacity: 0.5; font-size: 0.9rem;">
         <p>© 2026 redretep • built with pure html, css and js</p>
     </footer>
@@ -385,7 +440,6 @@
         // Loader Exit
         window.addEventListener('load', () => {
             const loader = document.getElementById('loading-screen');
-            // Ensure we hit 100% before closing
             progress = 100;
             progressEl.textContent = `100%`;
             
@@ -427,7 +481,7 @@
                 top: `${y}px`
             }, { duration: 500, fill: "forwards" });
 
-            if (e.target.closest('a, button, .repo-card')) {
+            if (e.target.closest('a, button, .repo-card, .badge-grid img')) {
                 document.body.classList.add('hovering');
             } else {
                 document.body.classList.remove('hovering');
